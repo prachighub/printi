@@ -42,33 +42,35 @@
 
             $(document).ready(function(){
 
-              //alert($("#ozcode").val());      
-              /* $("form").each(function(){
-                    $(this).find(':input') //<-- Should return all input elements in that specific form.
-                });*/
-                /*var origincode = $("#ozcode").val();    
-                var destcode = $("#dscode").val();
-                var dataString = "origincode=" + origincode + "&destcode=" + destcode;*/
+               $("#testform input").each(function() {
+                data['ozcode'] = $("#ozcode").val();
+                data['dscode'] = $("#dscode").val();
+                data['wght'] = $("#wght").val();
+                data['cog'] = $("#cog").val();
+                data['wdth'] = $("#wdth").val();
+                data['hgt'] = $("#hgt").val();
+                data['lnt'] = $("#lnt").val()
+            });
+      
+            var dataString = data;   
+            
+            var jsonString = JSON.stringify(dataString);
 
-               // alert(data);
-               var $results = '';
+            $.ajax({
+                    type: "POST",
+                    url: "index.php",
+                     //data: $("#testform").serialize(),
+                     data: {data : jsonString}, 
+                    cache: false,
 
-                foreach ($_POST as $key => $value) {
-                    echo $results .= "$key = $value;";
-                }
-
-               var origincode = $("#ozcode").val(); 
-               var dataString = origincode;
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'index.php',
-                    data: dataString,
-                    success: function(data) {
-                        alert(data);   
-                        //console.log(result)
+                    success: function(data){
+                        alert(data);
+                    },
+                    error: function(data) {
+                        alert("Error");
                     }
-                }); 
+
+                });
 
             });
         }
